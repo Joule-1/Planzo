@@ -5,7 +5,22 @@ import uploadOnCloudinary from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
-const registerUser = asyncHandler(async function(req, res){
+const generateAccessTokenAndRefreshToken = async function (userId) {
+    try {
+        const user = await User.findById(userId);
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateAccessToken();
+
+        user.refreshToken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+
+        return { accessToken, refreshToken };
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while generating tokens");
+    }
+};
+
+const registerUser = asyncHandler(async function (req, res) {
     //  get user details from frontend
     //  validation - not empty
     //  check if user already exists
@@ -61,6 +76,56 @@ const registerUser = asyncHandler(async function(req, res){
         );
 });
 
-export {
-    registerUser
-}
+const loginUser = asyncHandler(async function (req, res) {
+    //  req.body -> data
+    //  find the user by email
+    //  check password
+    //  generate refresh token and generate access token
+    //  save refresh token in db
+    //  return response after removing password and refresh token with cookie
+
+    const { email, password } = req.body;
+
+    if (!email || !password)
+        throw new ApiError(400, "Email and Password are required");
+
+    const user = await User.findOne({
+        email,
+    });
+
+    if (!user) throw new ApiError(400, "User doesn't exist");
+
+    const passwordExist = await user.isPasswordCorrect(password);
+
+    if (!passwordExist) throw new ApiError(400, "Password doesnt' exist");
+
+    const { accessToken, refreshToken } =
+        await generateAccessTokenAndRefreshToken(user._id);
+
+    const loggedInUser = await User.findById(user._id).select(
+        "-password -refreshToken"
+    );
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(201)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            200,
+            {
+                loggedInUser,
+                accessToken,
+                refreshToken,
+            },
+            "User Logged In Successfully"
+        );
+});
+
+
+
+export { registerUser, loginUser };
