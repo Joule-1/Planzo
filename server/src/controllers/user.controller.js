@@ -209,7 +209,11 @@ const getCurrentUser = asyncHandler(async function (req, res) {
             );
 });
 
+const changeCurrentPassword = asyncHandler(async function(req, res){
+    const {oldPassword, newPassword} = req.body;
 
+    
+});
 
 export {
     registerUser,
@@ -217,4 +221,5 @@ export {
     logoutUser,
     refreshAccessToken,
     getCurrentUser,
+    changeCurrentPassword
 };
