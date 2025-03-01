@@ -9,4 +9,6 @@ class ApiResponse{
         this.message = message;
         this.success = true;
     }
-}
+};
+
+export default ApiResponse;
