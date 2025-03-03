@@ -199,44 +199,27 @@ const refreshAccessToken = asyncHandler(async function (req, res) {
 
 const getCurrentUser = asyncHandler(async function (req, res) {
     return res
-            .status(200)
-            .json(
-                new ApiResponse(
-                    200,
-                    req.user,
-                    "User Fetched Successfully"
-                )
-            );
+        .status(200)
+        .json(new ApiResponse(200, req.user, "User Fetched Successfully"));
 });
 
-const changeCurrentPassword = asyncHandler(async function(req, res){
+const changeCurrentPassword = asyncHandler(async function (req, res) {
     const { oldPassword, newPassword } = req.body;
- 
+
     const user = await User.findById(req.user?._id);
 
     const isPasswordCorrect = await User.isPasswordCorrect(oldPassword);
 
-    if(!isPasswordCorrect)
-        throw new ApiError(401, "Invalid User Password");
+    if (!isPasswordCorrect) throw new ApiError(401, "Invalid User Password");
 
     user.password = password;
-    await user.save(
-        {
-            validatebeforeSave: false
-        }
-    );
+    await user.save({
+        validatebeforeSave: false,
+    });
 
     return res
-            .status(200)
-            .json(
-                new ApiResponse(
-                    200,
-                    {},
-                    "User Password Updated Successfully"
-                )
-            );
-
-
+        .status(200)
+        .json(new ApiResponse(200, {}, "User Password Updated Successfully"));
 });
 
 export {
@@ -245,5 +228,5 @@ export {
     logoutUser,
     refreshAccessToken,
     getCurrentUser,
-    changeCurrentPassword
+    changeCurrentPassword,
 };
