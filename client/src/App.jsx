@@ -1,13 +1,21 @@
 import "./App.css";
 import Home from "./components/Home";
-import NavbarHome from "./components/NavbarHome";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import SignIn from "./components/SignIn";
+import DynamicTitle from "./utils/DynamicTitle";
 
 function App() {
 
     return (
         <>
-        <NavbarHome />
-        <Home />
+        <BrowserRouter>
+        <DynamicTitle />
+            <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/SignIn" element={<SignIn />}></Route>
+                <Route path="/SignUp" element={<SignIn />}></Route>
+            </Routes>
+        </BrowserRouter>
         </>
     );
 }
