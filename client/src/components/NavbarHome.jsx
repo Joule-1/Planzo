@@ -19,9 +19,9 @@ const NavbarHome = () => {
                 <span className="ml-10 cursor-pointer hover:text-[#4b82ff]">Pricing</span>
             </div>
             <div className="flex items-center">
-                <span className="ml-5 cursor-pointer hover:text-[#4b82ff]"><Link to="/SignIn">Sign In</Link> </span>
+                <span className="ml-5 cursor-pointer hover:text-[#4b82ff]"><Link to="/SignIn">Sign In</Link></span>
                 <span className="ml-5 poppins-semibold cursor-pointer rounded-xl border-2 p-2 text-white bg-[#4b82ff] hover:text-[#4b82ff] hover:bg-white hover:border-[#4b82ff]">
-                    Sign Up for Free
+                <Link to="/SignUp">Sign Up for Free</Link>
                 </span>
             </div>
         </section>

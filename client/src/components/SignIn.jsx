@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Logo,
     MailIcon,
@@ -6,9 +6,15 @@ import {
     GoogleIcon,
     AppleIcon,
     SignInHeroImg,
+    HidePasswordIcon,
+    ShowPasswordIcon,
 } from "../assets";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
+
+    const [PasswordVisibility, setPasswordVisibility] = useState("password")
+
     return (
         <section className="flex h-screen items-center">
             <div className="fixed top-0 flex h-15 w-full place-content-between items-center bg-white px-10 shadow-md">
@@ -25,7 +31,7 @@ const SignIn = () => {
                         Don't have an account?
                     </span>
                     <button className="poppins-semibold ml-2 cursor-pointer rounded-xl border-2 bg-[#4b82ff] p-2 text-white hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
-                        Sign Up
+                        <Link to="/SignUp">Sign Up</Link>
                     </button>
                 </div>
             </div>
@@ -78,14 +84,16 @@ const SignIn = () => {
                                 <img src={PasswordIcon} className="mr-2 w-6" />
                             </span>
                             <input
-                                type="password"
+                                type={PasswordVisibility}
                                 placeholder="Password"
                                 className="w-full pl-2"
                                 minLength="3"
                                 maxLength="100"
-                                autoFocus
                                 required
                             />
+                            <span onClick={() => (setPasswordVisibility(PasswordVisibility === "password" ? "text" : "password" ))}>
+                                <img src={(PasswordVisibility === "password" ? HidePasswordIcon : ShowPasswordIcon )} className="mr-2 w-4 cursor-pointer" />
+                            </span>
                         </div>
                         <button className="poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
                             Get Started
@@ -94,9 +102,9 @@ const SignIn = () => {
                             <span className="text-gray-500">
                                 Don't have an account?
                             </span>
-                            <button className="poppins-semibold ml-2 cursor-pointer rounded-xl text-[#4b82ff] hover:underline">
-                                Sign Up
-                            </button>
+                            <span className="poppins-semibold ml-2 cursor-pointer rounded-xl text-[#4b82ff] hover:underline">
+                                <Link to="/SignUp">Sign Up</Link>
+                            </span>
                         </div>
                     </form>
                 </div>
