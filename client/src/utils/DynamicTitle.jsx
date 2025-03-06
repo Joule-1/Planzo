@@ -3,9 +3,11 @@ import { useLocation } from "react-router-dom";
 
 const DynamicTitle = () => {
     const location = useLocation();
-
+    console.log(location);
     useEffect(() => {
-        document.title = `${location.pathname.slice(1)} - PingMe` || "PingMe";
+        document.title =
+            `${location.pathname.slice(1).trim() === "" ? "PingMe" : `${location.pathname.slice(1).charAt(0).toUpperCase() + location.pathname.slice(2)} - PingMe`}` ||
+            "PingMe";
     }, [location.pathname]);
 
     return null;

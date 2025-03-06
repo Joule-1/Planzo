@@ -12,8 +12,7 @@ import {
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
-
-    const [PasswordVisibility, setPasswordVisibility] = useState("password")
+    const [PasswordVisibility, setPasswordVisibility] = useState("password");
 
     return (
         <section className="flex h-screen items-center">
@@ -31,7 +30,7 @@ const SignIn = () => {
                         Don't have an account?
                     </span>
                     <button className="poppins-semibold ml-2 cursor-pointer rounded-xl border-2 bg-[#4b82ff] p-2 text-white hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
-                        <Link to="/SignUp">Sign Up</Link>
+                        <Link to="/signup">Sign Up</Link>
                     </button>
                 </div>
             </div>
@@ -47,13 +46,13 @@ const SignIn = () => {
                         Sign in with Open account
                     </div>
                     <div className="poppins-semibold flex">
-                        <div className="mr-2 flex cursor-pointer items-center justify-center rounded-lg border-1 border-gray-400 px-10 py-2">
+                        <div className="mr-2 flex cursor-pointer items-center justify-center rounded-lg border-1 border-gray-400 px-10 py-2 hover:border-gray-600">
                             <div className="w-5">
                                 <img src={GoogleIcon} />
                             </div>
                             <span>&nbsp;&nbsp;Google</span>
                         </div>
-                        <div className="flex cursor-pointer items-center justify-center rounded-lg border-1 border-gray-400 px-10 py-2">
+                        <div className="flex cursor-pointer items-center justify-center rounded-lg border-1 border-gray-400 px-10 py-2 hover:border-gray-600">
                             <div className="w-5">
                                 <img src={AppleIcon} />
                             </div>
@@ -91,19 +90,34 @@ const SignIn = () => {
                                 maxLength="100"
                                 required
                             />
-                            <span onClick={() => (setPasswordVisibility(PasswordVisibility === "password" ? "text" : "password" ))}>
-                                <img src={(PasswordVisibility === "password" ? HidePasswordIcon : ShowPasswordIcon )} className="mr-2 w-4 cursor-pointer" />
+                            <span
+                                onClick={() =>
+                                    setPasswordVisibility(
+                                        PasswordVisibility === "password"
+                                            ? "text"
+                                            : "password"
+                                    )
+                                }
+                            >
+                                <img
+                                    src={
+                                        PasswordVisibility === "password"
+                                            ? HidePasswordIcon
+                                            : ShowPasswordIcon
+                                    }
+                                    className="mr-2 w-4 cursor-pointer"
+                                />
                             </span>
                         </div>
                         <button className="poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
-                            Get Started
+                            Sign In
                         </button>
-                        <div className="text-xs mx-auto">
+                        <div className="mx-auto text-xs">
                             <span className="text-gray-500">
                                 Don't have an account?
                             </span>
                             <span className="poppins-semibold ml-2 cursor-pointer rounded-xl text-[#4b82ff] hover:underline">
-                                <Link to="/SignUp">Sign Up</Link>
+                                <Link to="/signup">Sign Up</Link>
                             </span>
                         </div>
                     </form>
