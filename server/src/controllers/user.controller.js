@@ -9,7 +9,7 @@ const generateAccessTokenAndRefreshToken = async function (userId) {
     try {
         const user = await User.findById(userId);
         const accessToken = user.generateAccessToken();
-        const refreshToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
 
         user.refreshToken = refreshToken;
         await user.save({ validateBeforeSave: false });
@@ -208,13 +208,13 @@ const changeCurrentPassword = asyncHandler(async function (req, res) {
 
     const user = await User.findById(req.user?._id);
 
-    const isPasswordCorrect = await User.isPasswordCorrect(oldPassword);
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
 
     if (!isPasswordCorrect) throw new ApiError(401, "Invalid User Password");
 
     user.password = password;
     await user.save({
-        validatebeforeSave: false,
+        validateBeforeSave: false,
     });
 
     return res

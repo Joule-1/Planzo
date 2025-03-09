@@ -5,9 +5,9 @@ import {
     PasswordIcon,
     GoogleIcon,
     AppleIcon,
-    SignInHeroImg,
     HidePasswordIcon,
     ShowPasswordIcon,
+    NameIcon
 } from "../assets";
 import { Link } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const SignIn = () => {
     const [PasswordVisibility, setPasswordVisibility] = useState("password");
 
     return (
-        <section className="flex h-screen items-center">
-            <div className="fixed top-0 flex h-15 w-full place-content-between items-center bg-white px-10 shadow-md">
+        <section className="flex flex-col h-screen items-center">
+            <div className="top-0 flex h-15 w-full place-content-between items-center bg-white px-10 shadow-md">
                 <div className="flex items-center">
                     <div className={`w-10 hover:scale-105`}>
                         <img src={Logo} className="w-full" />
@@ -27,23 +27,20 @@ const SignIn = () => {
                 </div>
                 <div className="text-xs">
                     <span className="text-gray-500">
-                        Don't have an account?
+                        Already have an account?
                     </span>
                     <button className="poppins-semibold ml-2 cursor-pointer rounded-xl border-2 bg-[#4b82ff] p-2 text-white hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
                         <Link to="/signup">Sign Up</Link>
                     </button>
                 </div>
             </div>
-            <div className="flex justify-center">
-                <div className="w-[40%]">
-                    <img src={SignInHeroImg} className="w-[80%]" />
-                </div>
-                <div className="my-auto ml-2">
-                    <div className="poppins-semibold mb-8 text-5xl">
+            <div className="flex justify-evenly my-auto p-5 rounded-2xl shadow-2xl">
+                <div className="ml-2">
+                    <div className="poppins-semibold mb-8 text-4xl">
                         Sign In
                     </div>
                     <div className="poppins-semibold my-4 text-xs">
-                        Sign in with Open account
+                        Sign In with Open account
                     </div>
                     <div className="poppins-semibold flex">
                         <div className="mr-2 flex cursor-pointer items-center justify-center rounded-lg border-1 border-gray-400 px-10 py-2 hover:border-gray-600">
@@ -64,30 +61,49 @@ const SignIn = () => {
                         or continue with email address
                     </div>
                     <form className="flex w-full flex-col">
-                        <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <span>
-                                <img src={MailIcon} className="mr-2 w-6" />
-                            </span>
+                    <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="name">
+                                <img src={NameIcon} className="mr-2 w-6" />
+                            </label>
                             <input
-                                type="email"
-                                placeholder="Email"
+                                type="text"
+                                id="name"
+                                placeholder="Name"
                                 className="w-full pl-2"
-                                minLength="6"
-                                maxLength="254"
+                                minLength={6}
+                                maxLength={254}
+                                autoComplete="off"
                                 autoFocus
                                 required
                             />
                         </div>
                         <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <span>
+                            <label htmlFor="email">
+                                <img src={MailIcon} className="mr-2 w-6" />
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Email"
+                                className="w-full pl-2"
+                                minLength={6}
+                                maxLength={254}
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
+                        <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="password">
                                 <img src={PasswordIcon} className="mr-2 w-6" />
-                            </span>
+                            </label>
                             <input
                                 type={PasswordVisibility}
+                                id="password"
                                 placeholder="Password"
                                 className="w-full pl-2"
-                                minLength="3"
-                                maxLength="100"
+                                minLength={3}
+                                maxLength={100}
+                                autoComplete="off"
                                 required
                             />
                             <span
@@ -110,11 +126,11 @@ const SignIn = () => {
                             </span>
                         </div>
                         <button className="poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
-                            Sign In
+                            Get Started
                         </button>
                         <div className="mx-auto text-xs">
                             <span className="text-gray-500">
-                                Don't have an account?
+                                Already have an account?
                             </span>
                             <span className="poppins-semibold ml-2 cursor-pointer rounded-xl text-[#4b82ff] hover:underline">
                                 <Link to="/signup">Sign Up</Link>

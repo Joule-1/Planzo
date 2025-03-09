@@ -5,9 +5,9 @@ import {
     PasswordIcon,
     GoogleIcon,
     AppleIcon,
-    SignUpHeroImg,
     HidePasswordIcon,
     ShowPasswordIcon,
+    NameIcon
 } from "../assets";
 import { Link } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const SignUp = () => {
     const [PasswordVisibility, setPasswordVisibility] = useState("password");
 
     return (
-        <section className="flex h-screen items-center">
-            <div className="fixed top-0 flex h-15 w-full place-content-between items-center bg-white px-10 shadow-md">
+        <section className="flex flex-col h-screen items-center">
+            <div className="top-0 flex h-15 w-full place-content-between items-center bg-white px-10 shadow-md">
                 <div className="flex items-center">
                     <div className={`w-10 hover:scale-105`}>
                         <img src={Logo} className="w-full" />
@@ -34,12 +34,9 @@ const SignUp = () => {
                     </button>
                 </div>
             </div>
-            <div className="flex justify-center">
-                <div className="w-[40%]">
-                    <img src={SignUpHeroImg} className="w-[80%]" />
-                </div>
-                <div className="my-auto ml-2">
-                    <div className="poppins-semibold mb-8 text-5xl">
+            <div className="flex justify-evenly my-auto p-5 rounded-2xl shadow-2xl">
+                <div className="ml-2">
+                    <div className="poppins-semibold mb-8 text-4xl">
                         Sign Up
                     </div>
                     <div className="poppins-semibold my-4 text-xs">
@@ -64,30 +61,49 @@ const SignUp = () => {
                         or continue with email address
                     </div>
                     <form className="flex w-full flex-col">
-                        <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <span>
-                                <img src={MailIcon} className="mr-2 w-6" />
-                            </span>
+                    <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="name">
+                                <img src={NameIcon} className="mr-2 w-6" />
+                            </label>
                             <input
-                                type="email"
-                                placeholder="Email"
+                                type="text"
+                                id="name"
+                                placeholder="Name"
                                 className="w-full pl-2"
-                                minLength="6"
-                                maxLength="254"
+                                minLength={6}
+                                maxLength={254}
+                                autoComplete="off"
                                 autoFocus
                                 required
                             />
                         </div>
                         <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <span>
+                            <label htmlFor="email">
+                                <img src={MailIcon} className="mr-2 w-6" />
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Email"
+                                className="w-full pl-2"
+                                minLength={6}
+                                maxLength={254}
+                                autoComplete="off"
+                                required
+                            />
+                        </div>
+                        <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="password">
                                 <img src={PasswordIcon} className="mr-2 w-6" />
-                            </span>
+                            </label>
                             <input
                                 type={PasswordVisibility}
+                                id="password"
                                 placeholder="Password"
                                 className="w-full pl-2"
-                                minLength="3"
-                                maxLength="100"
+                                minLength={3}
+                                maxLength={100}
+                                autoComplete="off"
                                 required
                             />
                             <span
@@ -109,13 +125,21 @@ const SignUp = () => {
                                 />
                             </span>
                         </div>
-                        <div className="poppins-light text-xs text-gray-600">
+                        <div className="poppins-light text-xs text-gray-500">
                             By signing up, you agree to our{" "}
-                            <Link to="/privacy" target="_blank" className="hover:underline">
+                            <Link
+                                to="/privacy"
+                                target="_blank"
+                                className="underline hover:text-gray-900"
+                            >
                                 Terms of Service
                             </Link>{" "}
-                            and{" "}
-                            <Link to="/tos" target="_blank" className="hover:underline">
+                            and{" "}<br />
+                            <Link
+                                to="/tos"
+                                target="_blank"
+                                className="underline hover:text-gray-900"
+                            >
                                 Privacy Policy.
                             </Link>
                         </div>
