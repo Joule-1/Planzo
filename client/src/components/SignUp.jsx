@@ -7,7 +7,7 @@ import {
     AppleIcon,
     HidePasswordIcon,
     ShowPasswordIcon,
-    NameIcon
+    NameIcon,
 } from "../assets";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const SignUp = () => {
     const [PasswordVisibility, setPasswordVisibility] = useState("password");
 
     return (
-        <section className="flex flex-col h-screen items-center">
+        <section className="flex h-screen flex-col items-center">
             <div className="top-0 flex h-15 w-full place-content-between items-center bg-white px-10 shadow-md">
                 <div className="flex items-center">
                     <div className={`w-10 hover:scale-105`}>
@@ -34,7 +34,7 @@ const SignUp = () => {
                     </button>
                 </div>
             </div>
-            <div className="flex justify-evenly my-auto p-5 rounded-2xl shadow-2xl">
+            <div className="my-auto flex justify-evenly rounded-2xl p-5 shadow-2xl">
                 <div className="ml-2">
                     <div className="poppins-semibold mb-8 text-4xl">
                         Sign Up
@@ -61,15 +61,15 @@ const SignUp = () => {
                         or continue with email address
                     </div>
                     <form className="flex w-full flex-col">
-                    <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <label htmlFor="name">
-                                <img src={NameIcon} className="mr-2 w-6" />
+                        <div className="my-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="name" className="rounded-l-lg h-12 flex items-center">
+                                <img src={NameIcon} className="pr-1 pl-2 w-8" />
                             </label>
                             <input
                                 type="text"
                                 id="name"
                                 placeholder="Name"
-                                className="w-full pl-2"
+                                className="w-full pl-2 h-12"
                                 minLength={6}
                                 maxLength={254}
                                 autoComplete="off"
@@ -77,36 +77,37 @@ const SignUp = () => {
                                 required
                             />
                         </div>
-                        <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <label htmlFor="email">
-                                <img src={MailIcon} className="mr-2 w-6" />
+                        <div className="my-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="email" className="rounded-l-lg h-12 flex items-center">
+                                <img src={MailIcon} className="pr-1 pl-2 w-8" />
                             </label>
                             <input
                                 type="email"
                                 id="email"
                                 placeholder="Email"
-                                className="w-full pl-2"
+                                className="w-full pl-2 h-12"
                                 minLength={6}
                                 maxLength={254}
                                 autoComplete="off"
                                 required
                             />
                         </div>
-                        <div className="my-4 flex items-center rounded-lg border-1 border-transparent bg-gray-100 px-2 py-3 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <label htmlFor="password">
-                                <img src={PasswordIcon} className="mr-2 w-6" />
+                        <div className="my-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                            <label htmlFor="password" className="rounded-l-lg h-12 flex items-center">
+                                <img src={PasswordIcon} className="pr-1 pl-2 w-9" />
                             </label>
                             <input
                                 type={PasswordVisibility}
                                 id="password"
                                 placeholder="Password"
-                                className="w-full pl-2"
+                                className="w-full pl-2 h-12"
                                 minLength={3}
                                 maxLength={100}
                                 autoComplete="off"
                                 required
                             />
                             <span
+                                className="rounded-r-lg h-12 flex items-center"
                                 onClick={() =>
                                     setPasswordVisibility(
                                         PasswordVisibility === "password"
@@ -134,7 +135,7 @@ const SignUp = () => {
                             >
                                 Terms of Service
                             </Link>{" "}
-                            and{" "}<br />
+                            and <br />
                             <Link
                                 to="/tos"
                                 target="_blank"
