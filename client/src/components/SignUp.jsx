@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     Logo,
     MailIcon,
@@ -10,8 +10,29 @@ import {
     NameIcon,
 } from "../assets";
 import { Link } from "react-router-dom";
+import api from "../utils/Axios.js";
 
 const SignUp = () => {
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const buttonRef = useRef();
+
+    async function formData(event) {
+        event.preventDefault();
+
+        buttonRef.current.value = "Submittting ... ";
+
+        await api
+            .post("users/register", {
+                fullname: nameRef.current.value,
+                email: emailRef.current.value,
+                password: passwordRef.current.value,
+            })
+            .then((res) => console.log(res.data.message))
+            .catch((error) => console.log(error));
+    }
+
     const [PasswordVisibility, setPasswordVisibility] = useState("password");
 
     return (
@@ -34,7 +55,7 @@ const SignUp = () => {
                     </button>
                 </div>
             </div>
-            <div className="my-auto flex justify-evenly rounded-2xl p-5 shadow-2xl">
+            <div className="my-auto flex justify-evenly rounded-2xl p-5 shadow-xl">
                 <div className="ml-2">
                     <div className="poppins-semibold mb-8 text-4xl">
                         Sign Up
@@ -60,70 +81,115 @@ const SignUp = () => {
                     <div className="poppins-semibold text-xs">
                         or continue with email address
                     </div>
-                    <form className="flex w-full flex-col">
-                        <div className="my-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <label htmlFor="name" className="rounded-l-lg h-12 flex items-center">
-                                <img src={NameIcon} className="pr-1 pl-2 w-8" />
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                placeholder="Name"
-                                className="w-full pl-2 h-12"
-                                minLength={6}
-                                maxLength={254}
-                                autoComplete="off"
-                                autoFocus
-                                required
-                            />
-                        </div>
-                        <div className="my-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <label htmlFor="email" className="rounded-l-lg h-12 flex items-center">
-                                <img src={MailIcon} className="pr-1 pl-2 w-8" />
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="Email"
-                                className="w-full pl-2 h-12"
-                                minLength={6}
-                                maxLength={254}
-                                autoComplete="off"
-                                required
-                            />
-                        </div>
-                        <div className="my-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
-                            <label htmlFor="password" className="rounded-l-lg h-12 flex items-center">
-                                <img src={PasswordIcon} className="pr-1 pl-2 w-9" />
-                            </label>
-                            <input
-                                type={PasswordVisibility}
-                                id="password"
-                                placeholder="Password"
-                                className="w-full pl-2 h-12"
-                                minLength={3}
-                                maxLength={100}
-                                autoComplete="off"
-                                required
-                            />
-                            <span
-                                className="rounded-r-lg h-12 flex items-center"
-                                onClick={() =>
-                                    setPasswordVisibility(
-                                        PasswordVisibility === "password"
-                                            ? "text"
-                                            : "password"
-                                    )
-                                }
-                            >
-                                <img
-                                    src={
-                                        PasswordVisibility === "password"
-                                            ? HidePasswordIcon
-                                            : ShowPasswordIcon
-                                    }
-                                    className="mr-2 w-4 cursor-pointer"
+                    <form className="flex w-full flex-col" onSubmit={formData}>
+                        <div>
+                            <div className="mt-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                                <label
+                                    htmlFor="name"
+                                    className="flex h-12 items-center rounded-l-lg"
+                                >
+                                    <img
+                                        src={NameIcon}
+                                        className="w-8 pr-1 pl-2"
+                                    />
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    placeholder="Name"
+                                    className="h-12 w-full pl-2"
+                                    // minLength={6}
+                                    // maxLength={254}
+                                    autoComplete="off"
+                                    ref={nameRef}
+                                    autoFocus
+                                    // required
                                 />
+                            </div>
+                            <span
+                                name="errorText"
+                                className="block pb-2 text-xs text-red-500"
+                            >
+                                &nbsp;Invalid password
+                            </span>
+                        </div>
+                        <div>
+                            <div className="flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                                <label
+                                    htmlFor="email"
+                                    className="flex h-12 items-center rounded-l-lg"
+                                >
+                                    <img
+                                        src={MailIcon}
+                                        className="w-8 pr-1 pl-2"
+                                    />
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder="Email"
+                                    className="h-12 w-full pl-2"
+                                    // minLength={6}
+                                    // maxLength={254}
+                                    ref={emailRef}
+                                    autoComplete="off"
+                                    // required
+                                />
+                            </div>
+                            <span
+                                name="errorText"
+                                className="block pb-2 text-xs text-red-500"
+                            >
+                                &nbsp;Invalid password
+                            </span>
+                        </div>
+                        <div className="mb-4">
+                            <div className="flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
+                                <label
+                                    htmlFor="password"
+                                    className="flex h-12 items-center rounded-l-lg"
+                                >
+                                    <img
+                                        src={PasswordIcon}
+                                        className="w-9 pr-1 pl-2"
+                                    />
+                                </label>
+                                <input
+                                    type={PasswordVisibility}
+                                    id="password"
+                                    placeholder="Password"
+                                    className="h-12 w-full pl-2"
+                                    // minLength={3}
+                                    // maxLength={100}
+                                    ref={passwordRef}
+                                    autoComplete="off"
+                                    // required
+                                />
+                                <span
+                                    className="flex h-12 items-center rounded-r-lg"
+                                    onClick={() =>
+                                        setPasswordVisibility(
+                                            PasswordVisibility === "password"
+                                                ? "text"
+                                                : "password"
+                                        )
+                                    }
+                                >
+                                    <img
+                                        src={
+                                            PasswordVisibility === "password"
+                                                ? HidePasswordIcon
+                                                : ShowPasswordIcon
+                                        }
+                                        className="mr-2 w-4 cursor-pointer"
+                                    />
+                                </span>
+                            </div>
+                            <span
+                                name="errorText"
+                                className="block pb-2 text-xs text-red-500"
+                            >
+                                &nbsp;Invalid password
                             </span>
                         </div>
                         <div className="poppins-light text-xs text-gray-500">
@@ -144,7 +210,11 @@ const SignUp = () => {
                                 Privacy Policy.
                             </Link>
                         </div>
-                        <button className="poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]">
+                        <button
+                            type="submit"
+                            className="poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]"
+                            ref={buttonRef}
+                        >
                             Get Started
                         </button>
                         <div className="mx-auto text-xs">

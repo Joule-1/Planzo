@@ -16,7 +16,7 @@ const generateAccessTokenAndRefreshToken = async function (userId) {
 
         return { accessToken, refreshToken };
     } catch (error) {
-        throw new ApiError(500, "Something went wrong while generating tokens");
+        throw new ApiError(200, "Something went wrong while generating tokens");
     }
 };
 
@@ -35,12 +35,12 @@ const registerUser = asyncHandler(async function (req, res) {
     const { fullname, email, password } = req.body;
 
     if ([fullname, email, password].some((field) => field?.trim() === "")) {
-        throw new ApiError(400, "All fields are required.");
+        throw new ApiError(200, "All fields are required.");
     }
 
     const existingUser = await User.findOne({ email });
 
-    if (existingUser) throw new ApiError(409, "User already exists.");
+    if (existingUser) throw new ApiError(200, "User already exists.");
 
     let userImageLocalPath;
     if (
@@ -52,12 +52,22 @@ const registerUser = asyncHandler(async function (req, res) {
 
     const uploadUserImage = await uploadOnCloudinary(userImageLocalPath);
 
-    const user = await User.create({
+    const user = await User({
         fullname,
         email,
         userImage: uploadUserImage?.url || "",
         password,
     });
+
+    try{
+        await user.validate();
+        await user.save();
+    }
+    catch(error){
+        const firstError = error.errors.fullname || error.errors.email || error.errors.password;
+
+        throw new ApiError(200, firstError.properties.message);
+    }
 
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
@@ -65,7 +75,7 @@ const registerUser = asyncHandler(async function (req, res) {
 
     if (!createdUser)
         throw new ApiError(
-            500,
+            200,
             "Something Went Wrong While Registering The User"
         );
 
@@ -87,17 +97,17 @@ const loginUser = asyncHandler(async function (req, res) {
     const { email, password } = req.body;
 
     if (!email || !password)
-        throw new ApiError(400, "Email and Password are required");
+        throw new ApiError(200, "Email and Password are required");
 
     const user = await User.findOne({
         email,
     });
 
-    if (!user) throw new ApiError(400, "User doesn't exist");
+    if (!user) throw new ApiError(200, "User doesn't exist");
 
     const passwordExist = await user.isPasswordCorrect(password);
 
-    if (!passwordExist) throw new ApiError(400, "Password doesnt' exist");
+    if (!passwordExist) throw new ApiError(200, "Password doesnt' exist");
 
     const { accessToken, refreshToken } =
         await generateAccessTokenAndRefreshToken(user._id);
@@ -117,7 +127,7 @@ const loginUser = asyncHandler(async function (req, res) {
         .cookie("refreshToken", refreshToken, options)
         .json(
             new ApiResponse(
-                200,
+                201,
                 {
                     loggedInUser,
                     accessToken,
@@ -147,10 +157,10 @@ const logoutUser = asyncHandler(async function (req, res) {
     };
 
     return res
-        .status(200)
+        .status(201)
         .clearCookie("accessToken", options)
         .clearCookie("refreshToken", options)
-        .json(new ApiResponse(200, {}, "User Logged Out Successfully"));
+        .json(new ApiResponse(201, {}, "User Logged Out Successfully"));
 });
 
 const refreshAccessToken = asyncHandler(async function (req, res) {
@@ -199,8 +209,8 @@ const refreshAccessToken = asyncHandler(async function (req, res) {
 
 const getCurrentUser = asyncHandler(async function (req, res) {
     return res
-        .status(200)
-        .json(new ApiResponse(200, req.user, "User Fetched Successfully"));
+        .status(201)
+        .json(new ApiResponse(201, req.user, "User Fetched Successfully"));
 });
 
 const changeCurrentPassword = asyncHandler(async function (req, res) {
@@ -218,8 +228,8 @@ const changeCurrentPassword = asyncHandler(async function (req, res) {
     });
 
     return res
-        .status(200)
-        .json(new ApiResponse(200, {}, "User Password Updated Successfully"));
+        .status(201)
+        .json(new ApiResponse(201, {}, "User Password Updated Successfully"));
 });
 
 export {
