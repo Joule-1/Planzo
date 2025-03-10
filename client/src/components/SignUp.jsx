@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import {
     Logo,
     MailIcon,
@@ -11,6 +11,7 @@ import {
 } from "../assets";
 import { Link } from "react-router-dom";
 import api from "../utils/Axios.js";
+import validator from "validator";
 
 const SignUp = () => {
     const nameRef = useRef();
@@ -18,19 +19,98 @@ const SignUp = () => {
     const passwordRef = useRef();
     const buttonRef = useRef();
 
-    async function formData(event) {
+    const [nameError, setNameError] = useState();
+    const [emailError, setEmailError] = useState();
+    const [passwordError, setPasswordError] = useState();
+    const [formValid, setFormValid] = useState(false);
+
+    const validateName = () => {
+        const name = nameRef.current.value.trim();
+        if (
+            !/^[A-Za-z\s]+$/.test(name) ||
+            name.length < 3 ||
+            name.length > 100
+        ) {
+            setNameError("Must be at least 3 letters, no special characters");
+        } else {
+            setNameError("");
+        }
+    };
+
+    const validateEmail = () => {
+        const email = emailRef.current.value.trim();
+        if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+            email.length < 6 ||
+            email.length > 254
+        ) {
+            setEmailError("Invalid Email Format");
+        } else {
+            setEmailError("");
+        }
+    };
+
+    const validatePassword = () => {
+        const password = passwordRef.current.value.trim();
+
+        if (
+            !validator.isStrongPassword(password, {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
+            })
+        ) {
+            setPasswordError(
+                "Min 8 Characters: 1 Upper | 1 Lower | 1 Number | 1 Special"
+            );
+        } else {
+            setPasswordError(""); // Clear error if password is strong
+        }
+    };
+
+    async function handleFormSubmission(event) {
         event.preventDefault();
 
-        buttonRef.current.value = "Submittting ... ";
+        validateName();
+        validateEmail();
+        validatePassword();
+        
 
-        await api
-            .post("users/register", {
+        if (nameError !== "") {
+            setNameError("Must be at least 3 letters, no special characters");
+            return;
+        }
+        if (emailError !== "") {
+            setEmailError("Invalid Email Format");
+            return;
+        }
+        if (passwordError !== "") {
+            setPasswordError(
+                "Min 8 Characters: 1 Upper | 1 Lower | 1 Number | 1 Special"
+            );
+            return;
+        }
+
+        try {
+            const res = await api.post("users/register", {
                 fullname: nameRef.current.value,
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
-            })
-            .then((res) => console.log(res.data.message))
-            .catch((error) => console.log(error));
+            });
+            console.log("User ID:", res.data.data._id);
+
+            nameRef.current.value = "";
+            emailRef.current.value = "";
+            passwordRef.current.value = "";
+        } catch (error) {
+            console.error(
+                "Error:",
+                error.response?.data?.message || error.message
+            );
+        } finally {
+        }
     }
 
     const [PasswordVisibility, setPasswordVisibility] = useState("password");
@@ -81,7 +161,10 @@ const SignUp = () => {
                     <div className="poppins-semibold text-xs">
                         or continue with email address
                     </div>
-                    <form className="flex w-full flex-col" onSubmit={formData}>
+                    <form
+                        className="flex w-full flex-col"
+                        onSubmit={handleFormSubmission}
+                    >
                         <div>
                             <div className="mt-4 flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
                                 <label
@@ -98,19 +181,17 @@ const SignUp = () => {
                                     id="name"
                                     placeholder="Name"
                                     className="h-12 w-full pl-2"
-                                    // minLength={6}
-                                    // maxLength={254}
                                     autoComplete="off"
                                     ref={nameRef}
                                     autoFocus
-                                    // required
+                                    onBlur={validateName}
                                 />
                             </div>
                             <span
                                 name="errorText"
                                 className="block pb-2 text-xs text-red-500"
                             >
-                                &nbsp;Invalid password
+                                &nbsp;{nameError}
                             </span>
                         </div>
                         <div>
@@ -132,6 +213,7 @@ const SignUp = () => {
                                     // minLength={6}
                                     // maxLength={254}
                                     ref={emailRef}
+                                    onBlur={validateEmail}
                                     autoComplete="off"
                                     // required
                                 />
@@ -140,10 +222,10 @@ const SignUp = () => {
                                 name="errorText"
                                 className="block pb-2 text-xs text-red-500"
                             >
-                                &nbsp;Invalid password
+                                &nbsp;{emailError}
                             </span>
                         </div>
-                        <div className="mb-4">
+                        <div>
                             <div className="flex items-center rounded-lg border border-transparent bg-gray-100 text-sm transition-all duration-300 hover:border-[#4b82ff]">
                                 <label
                                     htmlFor="password"
@@ -159,11 +241,9 @@ const SignUp = () => {
                                     id="password"
                                     placeholder="Password"
                                     className="h-12 w-full pl-2"
-                                    // minLength={3}
-                                    // maxLength={100}
                                     ref={passwordRef}
+                                    onBlur={validatePassword}
                                     autoComplete="off"
-                                    // required
                                 />
                                 <span
                                     className="flex h-12 items-center rounded-r-lg"
@@ -189,7 +269,7 @@ const SignUp = () => {
                                 name="errorText"
                                 className="block pb-2 text-xs text-red-500"
                             >
-                                &nbsp;Invalid password
+                                &nbsp;{passwordError}
                             </span>
                         </div>
                         <div className="poppins-light text-xs text-gray-500">
@@ -212,7 +292,8 @@ const SignUp = () => {
                         </div>
                         <button
                             type="submit"
-                            className="poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]"
+                            // disabled={!formValid} ${formValid ? "cursor-pointer" : "cursor-not-allowed"}
+                            className={`poppins-semibold my-4 flex cursor-pointer items-center justify-center rounded-2xl border-2 border-transparent bg-[#4b82ff] px-2 py-2 text-sm text-white transition-all duration-400 hover:border-[#4b82ff] hover:bg-white hover:text-[#4b82ff]`}
                             ref={buttonRef}
                         >
                             Get Started

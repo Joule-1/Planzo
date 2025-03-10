@@ -21,8 +21,8 @@ const userSchema = new Schema(
             trim: true,
             index: true,
             lowercase: true,
-            set: (value) => validator.normalizeEmail(value),
-            validate: [validator.isEmail, "Invalid Email Format"]
+            validate: [validator.isEmail, "Invalid Email Format"],
+            set: (value) => validator.normalizeEmail(value)
         },
         userImage: {
             type: String
