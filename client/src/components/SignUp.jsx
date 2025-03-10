@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Logo,
     MailIcon,
@@ -12,8 +13,12 @@ import {
 import { Link } from "react-router-dom";
 import api from "../utils/Axios.js";
 import validator from "validator";
+import { UserContext } from "../utils/UserProvider.jsx";
 
 const SignUp = () => {
+    // const { userid, setUserId } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -31,7 +36,7 @@ const SignUp = () => {
             name.length < 3 ||
             name.length > 100
         ) {
-            setNameError("Must be at least 3 letters, no special characters");
+            setNameError("Must be at least 3 alphabets");
         } else {
             setNameError("");
         }
@@ -66,7 +71,7 @@ const SignUp = () => {
                 "Min 8 Characters: 1 Upper | 1 Lower | 1 Number | 1 Special"
             );
         } else {
-            setPasswordError(""); // Clear error if password is strong
+            setPasswordError("");
         }
     };
 
@@ -76,10 +81,9 @@ const SignUp = () => {
         validateName();
         validateEmail();
         validatePassword();
-        
 
         if (nameError !== "") {
-            setNameError("Must be at least 3 letters, no special characters");
+            setNameError("Must be at least 3 alphabets");
             return;
         }
         if (emailError !== "") {
@@ -94,22 +98,29 @@ const SignUp = () => {
         }
 
         try {
-            const res = await api.post("users/register", {
+            const res = await api.post("user/register", {
                 fullname: nameRef.current.value,
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
             });
-            console.log("User ID:", res.data.data._id);
+            console.log(res.data);
+            if (res.data.success == false) {
+                console.log(res.data.message);
+            } else {
+                console.log("User ID:", res.data.data._id);
 
-            nameRef.current.value = "";
-            emailRef.current.value = "";
-            passwordRef.current.value = "";
+                // setUserId(res.data.data._id);
+                navigate(`/user/dashboard/${res.data.data._id}`);
+
+                nameRef.current.value = "";
+                emailRef.current.value = "";
+                passwordRef.current.value = "";
+            }
         } catch (error) {
             console.error(
                 "Error:",
                 error.response?.data?.message || error.message
             );
-        } finally {
         }
     }
 

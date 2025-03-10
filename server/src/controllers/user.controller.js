@@ -10,7 +10,6 @@ const generateAccessTokenAndRefreshToken = async function (userId) {
         const user = await User.findById(userId);
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
-
         user.refreshToken = refreshToken;
         await user.save({ validateBeforeSave: false });
 
@@ -59,15 +58,22 @@ const registerUser = asyncHandler(async function (req, res) {
         password,
     });
 
-    try{
+    console.log(user._id);
+
+    try {
         await user.validate();
         await user.save();
-    }
-    catch(error){
-        const firstError = error.errors.fullname || error.errors.email || error.errors.password;
+    } catch (error) {
+        const firstError =
+            error.errors.fullname ||
+            error.errors.email ||
+            error.errors.password;
 
         throw new ApiError(200, firstError.properties.message);
     }
+
+    const { accessToken, refreshToken } =
+        await generateAccessTokenAndRefreshToken(user._id);
 
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
@@ -79,8 +85,15 @@ const registerUser = asyncHandler(async function (req, res) {
             "Something Went Wrong While Registering The User"
         );
 
+    const options = {
+        httpOnly: true, 
+        secure: true
+    };
+ 
     return res
         .status(201)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
         .json(
             new ApiResponse(201, createdUser, "User Registered Successfully")
         );
@@ -167,7 +180,7 @@ const refreshAccessToken = asyncHandler(async function (req, res) {
     const incomingRefreshToken =
         req.body.refreshToken || req.cookies.refreshToken;
 
-    if (!incomingRefreshToken) throw ApiError(401, "Unauthorized Request");
+    if (!incomingRefreshToken) throw ApiError(200, "Unauthorized Request");
 
     try {
         const decodedToken = jwt.verify(
@@ -178,7 +191,7 @@ const refreshAccessToken = asyncHandler(async function (req, res) {
         const user = User.findById(decodedToken?._id);
 
         if (user?.refreshToken !== incomingRefreshToken)
-            throw ApiError(401, "Refresh token is expired or used");
+            throw ApiError(200, "Refresh token is expired or used");
 
         const { accessToken, newRefreshToken } =
             await generateAccessTokenAndRefreshToken(user?._id);
@@ -203,7 +216,7 @@ const refreshAccessToken = asyncHandler(async function (req, res) {
                 )
             );
     } catch (error) {
-        throw ApiError(401, error?.message || "Invalid Refresh Token");
+        throw ApiError(200, error?.message || "Invalid Refresh Token");
     }
 });
 
@@ -213,6 +226,24 @@ const getCurrentUser = asyncHandler(async function (req, res) {
         .json(new ApiResponse(201, req.user, "User Fetched Successfully"));
 });
 
+const authenticateUser = asyncHandler(async function (req, res) {
+    const { _id } = req.body;
+
+    if (!_id) {
+        throw new ApiError(200, "User ID not present");
+    }
+
+    const user = await User.findById(_id).select("-password -refreshToken");
+
+    if (!user) throw new ApiError(200, "User doesn't exist");
+
+    return res
+        .status(201)
+        .json(
+            new ApiResponse(201, req.user, "User Authenticated Successfully")
+        );
+});
+
 const changeCurrentPassword = asyncHandler(async function (req, res) {
     const { oldPassword, newPassword } = req.body;
 
@@ -220,7 +251,7 @@ const changeCurrentPassword = asyncHandler(async function (req, res) {
 
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
 
-    if (!isPasswordCorrect) throw new ApiError(401, "Invalid User Password");
+    if (!isPasswordCorrect) throw new ApiError(200, "Invalid User Password");
 
     user.password = password;
     await user.save({
@@ -238,5 +269,6 @@ export {
     logoutUser,
     refreshAccessToken,
     getCurrentUser,
+    authenticateUser,
     changeCurrentPassword,
 };

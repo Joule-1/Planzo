@@ -60,7 +60,7 @@ userSchema.methods.generateAccessToken = function(){
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-            algorithm: "RS256",
+            algorithm: "HS256",
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
         }
     );
@@ -73,7 +73,7 @@ userSchema.methods.generateRefreshToken = function (){
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
-            algorithm: "RS256",
+            algorithm: "HS256",
             expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
         }
     );
