@@ -6,7 +6,7 @@ const DynamicTitle = () => {
 
     useEffect(() => {
         document.title =
-            `${location.pathname.slice(1).trim() === "" ? "PingMe" : `${location.pathname.slice(1).charAt(0).toUpperCase() + location.pathname.slice(2)} - PingMe`}` ||
+            `${location.pathname.slice(1).trim() === "" || location.pathname.trim().length >= 8 ? "PingMe" : `${location.pathname.slice(1).charAt(0).toUpperCase() + location.pathname.slice(2)} - PingMe`}` ||
             "PingMe";
     }, [location.pathname]);
 
