@@ -5,9 +5,16 @@ const DynamicTitle = () => {
     const location = useLocation();
 
     useEffect(() => {
-        document.title =
-            `${location.pathname.slice(1).trim() === "" || location.pathname.trim().length >= 8 ? "PingMe" : `${location.pathname.slice(1).charAt(0).toUpperCase() + location.pathname.slice(2)} - PingMe`}` ||
-            "PingMe";
+        const titleName = {
+            "/": "Home",
+            "/home": "Home",
+            "/signin": "SignIn",
+            "/signup": "SignUp",
+            "/privacy": "Privacy Policy",
+            "/tos": "Terms Of Service"
+        };
+
+        document.title = `${titleName[location.pathname] === undefined ? "PingMe" : `${titleName[location.pathname]} - PingMe`}` || "PingMe";
     }, [location.pathname]);
 
     return null;

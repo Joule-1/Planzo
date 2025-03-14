@@ -17,9 +17,9 @@ const NavbarHome = () => {
                 <span className="ml-10 cursor-pointer hover:text-[#4b82ff]">
                     Features
                 </span>
-                <span className="ml-10 cursor-pointer hover:text-[#4b82ff]">
+                <Link to="/privacy" className="ml-10 cursor-pointer hover:text-[#4b82ff]">
                     Privacy
-                </span>
+                </Link>
                 <span className="ml-10 cursor-pointer hover:text-[#4b82ff]">
                     Pricing
                 </span>
