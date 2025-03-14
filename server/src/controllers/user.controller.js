@@ -86,10 +86,10 @@ const registerUser = asyncHandler(async function (req, res) {
         );
 
     const options = {
-        httpOnly: true, 
-        secure: true
+        httpOnly: true,
+        secure: true,
     };
- 
+
     return res
         .status(201)
         .cookie("accessToken", accessToken, options)

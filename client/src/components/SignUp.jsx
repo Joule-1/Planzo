@@ -286,7 +286,7 @@ const SignUp = () => {
                         <div className="poppins-light text-xs text-gray-500">
                             By signing up, you agree to our{" "}
                             <Link
-                                to="/privacy"
+                                to="/tos"
                                 target="_blank"
                                 className="underline hover:text-gray-900"
                             >
@@ -294,7 +294,7 @@ const SignUp = () => {
                             </Link>{" "}
                             and <br />
                             <Link
-                                to="/tos"
+                                to="/privacy"
                                 target="_blank"
                                 className="underline hover:text-gray-900"
                             >

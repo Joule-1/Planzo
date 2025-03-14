@@ -7,7 +7,6 @@ import NameIcon from "./SignInImages/NameIcon.png";
 import HidePasswordIcon from "./SignInImages/HidePasswordIcon.png";
 import ShowPasswordIcon from "./SignInImages/ShowPasswordIcon.png";
 
-
 export {
     Logo,
     MailIcon,
@@ -16,5 +15,5 @@ export {
     AppleIcon,
     HidePasswordIcon,
     ShowPasswordIcon,
-    NameIcon
+    NameIcon,
 };

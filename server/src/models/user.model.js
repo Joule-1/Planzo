@@ -22,18 +22,18 @@ const userSchema = new Schema(
             index: true,
             lowercase: true,
             validate: [validator.isEmail, "Invalid Email Format"],
-            set: (value) => validator.normalizeEmail(value)
+            set: (value) => validator.normalizeEmail(value),
         },
         userImage: {
-            type: String
+            type: String,
         },
         password: {
             type: String,
             required: [true, "Password is required"],
-            validate:[validator.isStrongPassword, "Invalid Password"]
+            validate: [validator.isStrongPassword, "Invalid Password"],
         },
         refreshToken: {
-            type: String
+            type: String,
         },
     },
     {
@@ -42,16 +42,16 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", async function (next) {
-    if(!this.isModified("password")) return next();
+    if (!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password, 10);
     next();
-});    
+});
 
-userSchema.methods.isPasswordCorrect = async function(password){
+userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.generateAccessToken = function(){
+userSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
             _id: this._id,
@@ -66,7 +66,7 @@ userSchema.methods.generateAccessToken = function(){
     );
 };
 
-userSchema.methods.generateRefreshToken = function (){
+userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,

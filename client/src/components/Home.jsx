@@ -15,7 +15,8 @@ const Home = () => {
                         Capture, organize, and tackle your to-dos from anywhere.
                     </div> */}
                     <div className="poppins-semibold text-base text-gray-500">
-                    Capture, organize, and tackle your to-dos from anywhere. Escape the clutter and chaos—unleash your productivity
+                        Capture, organize, and tackle your to-dos from anywhere.
+                        Escape the clutter and chaos—unleash your productivity
                         with PingMe.
                     </div>
                     {/* <input
