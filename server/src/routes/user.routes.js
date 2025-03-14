@@ -18,9 +18,10 @@ router.route("/register").post(upload.single("userImage"), registerUser);
 
 router.route("/login").post(loginUser);
 
+// Secure Time Route
 router.route("/secure-time").get(secureTime);
 
-//secure routes
+// Secure Routes
 router.route("/authenticate-user").post(verifyJWT, authenticateUser);
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);

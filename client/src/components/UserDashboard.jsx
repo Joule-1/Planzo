@@ -15,7 +15,7 @@ const UserDashboard = () => {
     const fetchUser = async () => {
         try {
             const res = await api.post(
-                "user/authenticate-user",
+                "/authenticate-user",
                 {
                     _id: userid,
                 },

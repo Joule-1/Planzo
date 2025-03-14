@@ -1,17 +1,26 @@
+import api from "./Axios";
+
+const months = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December",
+};
+
 async function getCurrentTime() {
     try {
-        const responseIP = await fetch("https://api.ipify.org?format=json");
-        const userIp = await responseIP.json();
-
-        const response = await fetch(
-            `https://timeapi.io/api/time/current/ip?ipAddress=${userIp.ip}`
-        );
-
-        const data = await response.json();
-
-        return data;
+        const response = await api.get(`/secure-time`);
+        response.data.data.month = months[response.data.data.month];
+        return response.data.data;
     } catch (error) {
-        console.log(error);
         return null;
     }
 }
