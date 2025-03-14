@@ -8,11 +8,13 @@ import Privacy from "./components/Privacy.jsx";
 import TermsOfService from "./components/TermsOfService.jsx";
 import UserDashboard from "./components/UserDashboard.jsx";
 import NotFound from "./components/NotFound.jsx";
+import Calendar from "./utils/Calendar.jsx";
 
 function App() {
     return (
         <>
-            <BrowserRouter>
+            <Calendar />
+            {/* <BrowserRouter>
                 <DynamicTitle />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
@@ -27,7 +29,7 @@ function App() {
                     ></Route>
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
-            </BrowserRouter>
+            </BrowserRouter> */}
         </>
     );
 }

@@ -6,6 +6,9 @@ import AppleIcon from "./SignInImages/AppleIcon.png";
 import NameIcon from "./SignInImages/NameIcon.png";
 import HidePasswordIcon from "./SignInImages/HidePasswordIcon.png";
 import ShowPasswordIcon from "./SignInImages/ShowPasswordIcon.png";
+import CalendarIcon from "./CalendarImages/CalendarIcon.svg";
+import LeftArrowIcon from "./CalendarImages/LeftArrowIcon.svg";
+import RightArrowIcon from "./CalendarImages/RightArrowIcon.svg";
 
 export {
     Logo,
@@ -16,4 +19,7 @@ export {
     HidePasswordIcon,
     ShowPasswordIcon,
     NameIcon,
+    CalendarIcon,
+    LeftArrowIcon,
+    RightArrowIcon
 };
