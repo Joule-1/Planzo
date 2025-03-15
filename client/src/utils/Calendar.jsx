@@ -163,10 +163,10 @@ const Calendar = () => {
                             {console.log(currentTime)}
                         </div>
                         <div className="flex items-center">
-                            <span className="mr-2 rounded-full bg-gray-200 p-2">
+                            <span className="mr-2 rounded-full bg-gray-200 p-2 cursor-pointer" onClick={() => (console.log("HIL"))}>
                                 <img src={LeftArrowIcon} />
                             </span>
-                            <div className="poppins-medium flex items-center rounded-full bg-gray-200 px-2 py-2">
+                            <div className="poppins-medium flex items-center rounded-full bg-gray-200 px-2 py-2 cursor-pointer">
                                 <span className="mx-2">
                                     <img src={CalendarIcon} />
                                 </span>
@@ -177,7 +177,7 @@ const Calendar = () => {
                                     <img src={DownArrowIcon} />
                                 </span>
                             </div>
-                            <span className="ml-2 rounded-full bg-gray-200 p-2">
+                            <span className="ml-2 rounded-full bg-gray-200 p-2 cursor-pointer" onClick={() => (console.log("HIR"))}>
                                 <img src={RightArrowIcon} />
                             </span>
                         </div>
