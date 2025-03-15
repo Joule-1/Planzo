@@ -98,7 +98,7 @@ const SignUp = () => {
         }
 
         try {
-            const res = await api.post("user/register", {
+            const res = await api.post("/register", {
                 fullname: nameRef.current.value,
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
@@ -110,7 +110,7 @@ const SignUp = () => {
                 console.log("User ID:", res.data.data._id);
 
                 // setUserId(res.data.data._id);
-                navigate(`/user/dashboard/${res.data.data._id}`);
+                navigate(`/dashboard/${res.data.data._id}`);
 
                 nameRef.current.value = "";
                 emailRef.current.value = "";
