@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import api from "../utils/Axios";
 import NotFound from "./NotFound";
+import UserNavbar from "./UserNavbar";
 
 const UserDashboard = () => {
     const { userid } = useParams();
@@ -36,9 +37,8 @@ const UserDashboard = () => {
     if (notFound) return <NotFound />;
 
     return (
-        <section>
-            Welcome, {userinfo}
-            <div></div>
+        <section className="h-screen bg-gray-200">
+            <UserNavbar />
         </section>
     );
 };

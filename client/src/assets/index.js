@@ -1,15 +1,19 @@
 import Logo from "./Logo.png";
-import MailIcon from "./SignInImages/MailIcon.png";
-import PasswordIcon from "./SignInImages/PasswordIcon.png";
-import GoogleIcon from "./SignInImages/GoogleIcon.png";
-import AppleIcon from "./SignInImages/AppleIcon.png";
-import NameIcon from "./SignInImages/NameIcon.png";
-import HidePasswordIcon from "./SignInImages/HidePasswordIcon.png";
-import ShowPasswordIcon from "./SignInImages/ShowPasswordIcon.png";
-import CalendarIcon from "./CalendarImages/CalendarIcon.svg";
-import LeftArrowIcon from "./CalendarImages/LeftArrowIcon.svg";
-import RightArrowIcon from "./CalendarImages/RightArrowIcon.svg";
-import DownArrowIcon from "./CalendarImages/DownArrowIcon.svg";
+import MailIcon from "./SignInIcons/MailIcon.png";
+import PasswordIcon from "./SignInIcons/PasswordIcon.png";
+import GoogleIcon from "./SignInIcons/GoogleIcon.png";
+import AppleIcon from "./SignInIcons/AppleIcon.png";
+import NameIcon from "./SignInIcons/NameIcon.png";
+import HidePasswordIcon from "./SignInIcons/HidePasswordIcon.png";
+import ShowPasswordIcon from "./SignInIcons/ShowPasswordIcon.png";
+import CalendarIcon from "./CalendarIcons/CalendarIcon.svg";
+import LeftArrowIcon from "./CalendarIcons/LeftArrowIcon.svg";
+import RightArrowIcon from "./CalendarIcons/RightArrowIcon.svg";
+import DownArrowIcon from "./CalendarIcons/DownArrowIcon.svg";
+import HomeIcon from "./UserDashboardIcons/HomeIcon.svg";
+import SettingsIcon from "./UserDashboardIcons/SettingsIcon.svg";
+import ChatIcon from "./UserDashboardIcons/ChatIcon.svg";
+import ActivityIcon from "./UserDashboardIcons/ActivityIcon.svg";
 
 export {
     Logo,
@@ -23,5 +27,9 @@ export {
     CalendarIcon,
     LeftArrowIcon,
     RightArrowIcon,
-    DownArrowIcon
+    DownArrowIcon,
+    HomeIcon,
+    SettingsIcon,
+    ChatIcon,
+    ActivityIcon
 };
