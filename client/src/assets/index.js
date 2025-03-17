@@ -14,6 +14,10 @@ import HomeIcon from "./UserDashboardIcons/HomeIcon.svg";
 import SettingsIcon from "./UserDashboardIcons/SettingsIcon.svg";
 import ChatIcon from "./UserDashboardIcons/ChatIcon.svg";
 import ActivityIcon from "./UserDashboardIcons/ActivityIcon.svg";
+import UserAvatarDefaultIcon from "./UserDashboardIcons/UserAvatarDefaultIcon.png"
+import SearchIcon from "./UserDashboardIcons/SearchIcon.png"
+import ThemeToggle_Dark from "./ThemeChangeIcons/ThemeToggle_Dark.png";
+import ThemeToggle_Light from "./ThemeChangeIcons/ThemeToggle_Light.png";
 
 export {
     Logo,
@@ -31,5 +35,9 @@ export {
     HomeIcon,
     SettingsIcon,
     ChatIcon,
-    ActivityIcon
+    ActivityIcon,
+    UserAvatarDefaultIcon,
+    SearchIcon,
+    ThemeToggle_Light,
+    ThemeToggle_Dark
 };

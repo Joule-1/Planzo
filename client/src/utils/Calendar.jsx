@@ -205,8 +205,8 @@ const Calendar = () => {
                         </div>
                     </div>
                     <div className="poppins-semibold mt-3 grid grid-cols-6 px-4 text-center">
-                        <span className="rounded-tl-2xl border-1 border-gray-300"></span>
-                        <span className="flex h-12 items-center justify-center border-1 border-gray-300">
+                        <span className="rounded-tl-2xl border-1 border-gray-200"></span>
+                        <span className="flex h-12 items-center justify-center border-1 border-gray-200">
                             {normalizeWeekDays(
                                 currentDay - 1,
                                 currentMonth,
