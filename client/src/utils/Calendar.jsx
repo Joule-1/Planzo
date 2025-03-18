@@ -4,8 +4,11 @@ import {
     RightArrowIcon,
     CalendarIcon,
     DownArrowIcon,
+    AddIcon,
+    RefreshIcon,
 } from "../assets";
 import getCurrentTime from "./GetCurrentTime.js";
+import AddSchedule from "../components/AddSchedule.jsx";
 
 const Calendar = () => {
     const weekDay = {
@@ -117,6 +120,7 @@ const Calendar = () => {
     const [currentYear, setCurrentYear] = useState("Year");
     const [currentDayOfWeek, setCurrentDayOfWeek] = useState("Monday");
     const [loading, setLoading] = useState(true);
+    const [displayAddSchedule, setdisplayAddSchedule] = useState(true);
 
     useEffect(() => {
         const fetchTime = async () => {
@@ -172,11 +176,14 @@ const Calendar = () => {
 
     return (
         <section>
+            <div className={`${displayAddSchedule ? 'block' : 'hidden'}`}>
+                <AddSchedule />
+            </div>
             <div className="h-[50vh]">
                 <div>
                     <div className="flex place-content-between items-center px-4">
                         <div className="poppins-semibold text-xl">
-                            Upcoming Schedule
+                            Manage Your Schedule
                         </div>
                         <div className="flex items-center">
                             <span
@@ -195,6 +202,12 @@ const Calendar = () => {
                                 <span className="mx-2">
                                     <img src={DownArrowIcon} />
                                 </span>
+                                <span>
+                                    <img
+                                        src={RefreshIcon}
+                                        className="rounded-full bg-white"
+                                    />
+                                </span>
                             </div>
                             <span
                                 className="ml-2 cursor-pointer rounded-full bg-gray-200 p-2"
@@ -204,9 +217,14 @@ const Calendar = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="poppins-semibold mt-3 grid grid-cols-6 px-4 text-center">
-                        <span className="rounded-tl-2xl border-1 border-gray-200"></span>
-                        <span className="flex h-12 items-center justify-center border-1 border-gray-200">
+                    <div className="poppins-semibold mt-3 grid grid-cols-11 px-4 text-center">
+                        <span className="flex items-center justify-center rounded-tl-2xl border-1 border-gray-200" onClick={() => (setdisplayAddSchedule(true))}>
+                            <img
+                                src={AddIcon}
+                                className="cursor-pointer rounded-full bg-gray-200 p-1"
+                            />
+                        </span>
+                        <span className="col-span-2 flex h-12 items-center justify-center border-1 border-gray-200">
                             {normalizeWeekDays(
                                 currentDay - 1,
                                 currentMonth,
@@ -215,10 +233,10 @@ const Calendar = () => {
                             &nbsp;
                             {normalizeMonthDays(currentDay - 1)}
                         </span>
-                        <span className="flex h-12 items-center justify-center border-1 border-b-2 border-gray-200 border-b-[#4b82ff] text-[#4b82ff]">
+                        <span className="col-span-2 flex h-12 items-center justify-center border-1 border-b-2 border-gray-200 border-b-[#4b82ff] text-[#4b82ff]">
                             {currentDayOfWeek} {currentDay}
                         </span>
-                        <span className="flex h-12 items-center justify-center border-1 border-gray-200">
+                        <span className="col-span-2 flex h-12 items-center justify-center border-1 border-gray-200">
                             {normalizeWeekDays(
                                 currentDay + 1,
                                 currentMonth,
@@ -227,7 +245,7 @@ const Calendar = () => {
                             &nbsp;
                             {normalizeMonthDays(currentDay + 1)}
                         </span>
-                        <span className="flex h-12 items-center justify-center border-1 border-gray-200">
+                        <span className="col-span-2 flex h-12 items-center justify-center border-1 border-gray-200">
                             {normalizeWeekDays(
                                 currentDay + 2,
                                 currentMonth,
@@ -236,7 +254,7 @@ const Calendar = () => {
                             &nbsp;
                             {normalizeMonthDays(currentDay + 2)}
                         </span>
-                        <span className="flex h-12 items-center justify-center rounded-tr-2xl border-1 border-gray-200">
+                        <span className="col-span-2 flex h-12 items-center justify-center rounded-tr-2xl border-1 border-gray-200">
                             {normalizeWeekDays(
                                 currentDay + 3,
                                 currentMonth,
@@ -246,23 +264,23 @@ const Calendar = () => {
                             {normalizeMonthDays(currentDay + 3)}
                         </span>
                         <span className="h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
                         <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
                         <span className="h-20 rounded-bl-2xl border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 border border-gray-200"></span>
-                        <span className="h-20 rounded-br-2xl border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 border border-gray-200"></span>
+                        <span className="col-span-2 h-20 rounded-br-2xl border border-gray-200"></span>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,9 @@ import CalendarIcon from "./CalendarIcons/CalendarIcon.svg";
 import LeftArrowIcon from "./CalendarIcons/LeftArrowIcon.svg";
 import RightArrowIcon from "./CalendarIcons/RightArrowIcon.svg";
 import DownArrowIcon from "./CalendarIcons/DownArrowIcon.svg";
+import AddIcon from "./CalendarIcons/AddIcon.svg";
+import CloseIcon from "./CalendarIcons/CloseIcon.svg";
+import RefreshIcon from "./CalendarIcons/RefreshIcon.svg";
 import HomeIcon from "./UserDashboardIcons/HomeIcon.svg";
 import SettingsIcon from "./UserDashboardIcons/SettingsIcon.svg";
 import ChatIcon from "./UserDashboardIcons/ChatIcon.svg";
@@ -32,6 +35,9 @@ export {
     LeftArrowIcon,
     RightArrowIcon,
     DownArrowIcon,
+    AddIcon,
+    CloseIcon,
+    RefreshIcon,
     HomeIcon,
     SettingsIcon,
     ChatIcon,
